@@ -8,27 +8,32 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![Avg Savings](docs/assets/badge-savings.svg)](docs/processors/)
 
-**Cut your AI coding costs by 60-99% on CLI output — without losing a single error message.**
+**Save more tokens & get over 60% more coding power out of your AI subscription (Claude Code, Codex, Antigravity).**
 
-Heimdall Token Saver is a drop-in **context-window optimizer for AI coding assistants**. It compresses the verbose terminal output your agent reads — `git diff`, `pytest`, `npm install`, `terraform plan`, `kubectl`, `docker` — so you spend fewer tokens, stay under your LLM context limit, and get faster, cheaper, more focused responses.
+---
 
-**36 specialized processors** understand the tools you already use — git, pytest, jest, cargo, go, docker, kubernetes, terraform, pulumi, helm, ansible, aws, gcloud, and more. Each one knows exactly what to keep and what to discard: errors, diffs, stack traces, and actionable data stay; progress bars, passing tests, download spinners, and boilerplate go.
+## ⚡ WHY HEIMDALL // Cut your AI coding costs by 60-99% on CLI output
 
-Compatible with **Claude Code** and **Antigravity CLI**. Zero added latency. No extra LLM calls. Fully deterministic. One install, instant savings.
+AI coding subscriptions (**Claude Code, OpenAI Codex / ChatGPT, Google Antigravity**) are constrained by context window sizes and strict hourly usage limits. Every time your AI agent executes a terminal command — `git diff`, `pytest`, `npm install`, `docker`, `terraform plan`, or `kubectl` — over **90% of the raw output is pure noise** (download spinners, passing tests, progress bars, and lockfile text).
 
-**Why developers use Heimdall Token Saver:**
+### The Problem With Raw Terminal Output
+When an AI agent reads raw CLI logs:
+1. **You waste your subscription quotas:** Your 5-hour rate limits expire up to **5x faster** because the model reads thousands of lines of useless progress bars.
+2. **Context window pollution:** The LLM's working memory gets cluttered with non-actionable boilerplate, causing the agent to forget earlier instructions and hallucinate fixes.
+3. **Higher API costs:** If you pay per 1M tokens, every `pytest` or `npm install` run burns money on passing tests and download indicators.
 
-- 💸 **Lower API bills** — pay for signal, not noise. Typical savings of 60-99% per command.
-- 🪟 **Bigger effective context** — fit more real work into the same context window.
-- ⚡ **Faster responses** — less text for the model to read means quicker turnarounds.
-- 🎯 **Zero information loss** — precision-tested so every error, diff, and warning survives.
-- 🔌 **Install once, forget it** — works automatically in the background, no prompts to change.
-- 🛡️ **Private & offline** — pure regex/parsing, no data ever leaves your machine.
+### The Heimdall Solution
+**Heimdall Token Saver** acts as an intelligent, zero-latency local context firewall between your CLI tools and your AI agent:
+- 🛡 **100% Signal, 0% Noise:** Strips out progress bars, passing test logs, and spinners while **guaranteeing zero information loss**. Every stack trace, error message, failing assertion, and diff survives intact.
+- 🚀 **Maximized Subscription Value:** Gives you **over 60% higher effective context capacity**, letting you run complex multi-file refactors without hitting hourly limit caps.
+- ⚡ **Faster Agent Responses:** Less text for LLMs to read means faster response times and razor-sharp debugging focus.
 
-### Before & After
+---
 
-| Command | Raw Output | Compressed | Savings |
-|---------|-----------|------------|---------|
+### Before & After Savings
+
+| Command | Raw Output | Compressed Output | Token Savings |
+|---------|-----------|-------------------|---------------|
 | `git diff` (large refactor) | 2,270 tokens | 909 tokens | **60%** |
 | `pytest` (500 tests, 2 failures) | 6,744 tokens | 308 tokens | **95%** |
 | `npm install` (220 packages) | 3,844 tokens | 4 tokens | **99%** |
@@ -37,21 +42,55 @@ Compatible with **Claude Code** and **Antigravity CLI**. Zero added latency. No 
 | `docker compose logs` (4 services) | 3,200 tokens | 480 tokens | **85%** |
 | `helm template` (12 manifests) | 2,100 tokens | 210 tokens | **90%** |
 
-> Run `token-saver benchmark <command>` to measure savings on your own workloads.
+> Run `token-saver benchmark <command>` to measure real-time savings on your own workloads.
 
-## Why
+---
 
-Every CLI command your AI assistant runs burns tokens — and most of that output is noise. A 500-line `git diff`, a `pytest` run with 200 passing tests, an `npm install` with 80 packages: the model only needs errors, modified files, and results. Everything else is wasted context and wasted money.
+## 🛠️ HOW IT WORKS
 
-Heimdall Token Saver sits between the CLI and your AI assistant, compressing output with content-aware strategies. The model sees exactly what it needs — nothing more, nothing less. Your context window stays clean, your costs drop, and your assistant responds faster with less noise to process.
+Heimdall Token Saver sits transparently between your terminal commands and AI coding assistants (**Claude Code, OpenAI Codex, Antigravity CLI**). 
 
-## How It Compares
+### Visual Pipeline Flow
 
-Heimdall Token Saver takes a different approach from LLM-based or caching solutions — see the [full comparison](docs/comparison.md).
+```
+ ┌────────────────────────────────────────────────────────┐
+ │           Raw CLI Tool Execution Output                │
+ │    (git diff, pytest, npm install, docker, terraform)   │
+ └───────────────────────────┬────────────────────────────┘
+                             │
+                             ▼
+ ┌────────────────────────────────────────────────────────┐
+ │            HEIMDALL TOKEN SAVER ENGINE                 │
+ │     36 Specialized Local Processors (Zero Latency)    │
+ └───────────────────────────┬────────────────────────────┘
+                             │
+            ┌────────────────┴────────────────┐
+            │                                 │
+            ▼                                 ▼
+   ┌─────────────────┐               ┌──────────────────┐
+   │  PRESERVED (100%)│               │  DISCARDED (0%)  │
+   │  • Error Traces │               │  • Progress Bars │
+   │  • Failing Tests│               │  • Passing Tests │
+   │  • File Diffs   │               │  • Download Logs │
+   │  • Warnings     │               │  • Boilerplate   │
+   └────────┬────────┘               └──────────────────┘
+            │
+            ▼
+ ┌────────────────────────────────────────────────────────┐
+ │       Clean, Compressed Context Output                 │
+ └───────────────────────────┬────────────────────────────┘
+                             │
+                             ▼
+ ┌────────────────────────────────────────────────────────┐
+ │        AI Coding Assistants & Subscriptions            │
+ │     (Claude Code • OpenAI Codex • Antigravity CLI)     │
+ └────────────────────────────────────────────────────────┘
+            │
+            ▼
+ 🎯 RESULT: 60-99% Token Reduction & Extended Hourly Quotas!
+```
 
-## How It Works
-
-### Architecture
+### Architecture & Engine Mechanics
 
 ```
 CLI command  -->  Specialized processor  -->  Compressed output
