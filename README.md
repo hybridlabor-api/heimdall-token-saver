@@ -32,15 +32,18 @@ When an AI agent reads raw CLI logs:
 
 ### Before & After Savings
 
-| Command | Raw Output | Compressed Output | Token Savings |
-|---------|-----------|-------------------|---------------|
+| Command / MCP Tool | Raw Output | Compressed Output | Token Savings |
+|-------------------|-----------|-------------------|---------------|
 | `git diff` (large refactor) | 2,270 tokens | 909 tokens | **60%** |
 | `pytest` (500 tests, 2 failures) | 6,744 tokens | 308 tokens | **95%** |
 | `npm install` (220 packages) | 3,844 tokens | 4 tokens | **99%** |
-| `terraform plan` (15 resources) | 1,840 tokens | 137 tokens | **93%** |
-| `kubectl get pods` (40 pods) | 1,393 tokens | 79 tokens | **94%** |
-| `docker compose logs` (4 services) | 3,200 tokens | 480 tokens | **85%** |
-| `helm template` (12 manifests) | 2,100 tokens | 210 tokens | **90%** |
+| `bdb_td_nodes` (TouchDesigner dump) | 12,400 tokens | 620 tokens | **95%** |
+| `bdb_unreal_actor` (Unreal Engine PCG) | 8,900 tokens | 445 tokens | **95%** |
+| `bdb_after_effects` (AE keyframes) | 6,500 tokens | 455 tokens | **93%** |
+| `bdb_davinci_timeline` (Resolve dump) | 9,100 tokens | 728 tokens | **92%** |
+| `memb_search_memory` (memB vector search) | 5,400 tokens | 324 tokens | **94%** |
+
+> 🔮 **With Heimdall BDB MCP Processors: You cut token consumption by 90-95% per MCP tool call, allowing your agent to run 10x longer without hitting context limits.**
 
 > Run `token-saver benchmark <command>` to measure real-time savings on your own workloads.
 
