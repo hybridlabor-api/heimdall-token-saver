@@ -88,9 +88,9 @@ class GhProcessor(Processor):
             parts = stripped.split("\t")
             compressed_parts = []
             for p in parts:
-                p = p.strip()  # noqa: PLW2901
+                p = p.strip()
                 if len(p) > 80:
-                    p = p[:77] + "..."  # noqa: PLW2901
+                    p = p[:77] + "..."
                 compressed_parts.append(p)
             result.append("\t".join(compressed_parts))
 

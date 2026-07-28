@@ -228,7 +228,7 @@ def migrate_from_legacy():
                     f.write("\n")
                 print("  REMOVED legacy hooks from settings.json")
                 found = True
-        except Exception:  # noqa: S110
+        except Exception:
             pass
 
     if found:

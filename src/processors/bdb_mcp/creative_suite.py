@@ -2,6 +2,7 @@
 
 import json
 import re
+
 from ..base import Processor
 
 
@@ -47,7 +48,7 @@ class BdbCreativeSuiteProcessor(Processor):
         for k, v in data.items():
             if k in ("matrix_transform", "zero_matrix", "full_schema"):
                 continue
-            elif k in ("vertices", "mesh_data", "polygons") and isinstance(v, list):
+            if k in ("vertices", "mesh_data", "polygons") and isinstance(v, list):
                 cleaned[k] = f"[{len(v)} mesh elements truncated]"
             else:
                 cleaned[k] = v

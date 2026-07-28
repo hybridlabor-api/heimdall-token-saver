@@ -1,6 +1,7 @@
 """BDB DaVinci Resolve MCP processor."""
 
 import json
+
 from ..base import Processor
 
 

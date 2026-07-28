@@ -2,6 +2,7 @@
 
 import json
 import re
+
 from ..base import Processor
 
 
@@ -35,9 +36,7 @@ class BdbTouchdesignerProcessor(Processor):
         lines = output.splitlines()
         filtered = []
         for line in lines:
-            if any(k in line.lower() for k in ("error", "fail", "warning", "exception", "modified", "path", "op:")):
-                filtered.append(line)
-            elif not re.search(r"frame\s+\d+|cook\s+time|fps:\s*\d+", line, re.I):
+            if any(k in line.lower() for k in ("error", "fail", "warning", "exception", "modified", "path", "op:")) or not re.search(r"frame\s+\d+|cook\s+time|fps:\s*\d+", line, re.I):
                 filtered.append(line)
 
         if len(filtered) < len(lines):
@@ -50,7 +49,7 @@ class BdbTouchdesignerProcessor(Processor):
             if k in ("errors", "warnings", "path", "name", "type", "modified_parameters", "script_errors"):
                 cleaned[k] = v
             elif k == "parameters" and isinstance(v, dict):
-                cleaned["parameters"] = {pk: pv for pk, pv in v.items() if isinstance(pv, dict) and pv.get("is_default") is False or pk in ("file", "text", "expr", "value")}
+                cleaned["parameters"] = {pk: pv for pk, pv in v.items() if (isinstance(pv, dict) and pv.get("is_default") is False) or pk in ("file", "text", "expr", "value")}
             elif k == "nodes" and isinstance(v, (dict, list)):
                 cleaned["nodes"] = f"[{len(v)} nodes summary]"
             elif v not in (None, [], {}, ""):

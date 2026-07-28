@@ -48,7 +48,7 @@ def main():
         tracker = SavingsTracker(session_id=cc_session)
         message = tracker.format_stats_message()
         tracker.close()
-    except Exception:  # noqa: S110
+    except Exception:
         pass
 
     if message is None:
@@ -62,7 +62,7 @@ def main():
         update_msg = check_for_update()
         if update_msg:
             message = f"{message} | {update_msg}"
-    except Exception:  # noqa: S110
+    except Exception:
         pass
 
     # One-time migration notice for v2.0
@@ -70,7 +70,7 @@ def main():
         migration_msg = _check_migration_message()
         if migration_msg:
             message = f"{message} | {migration_msg}"
-    except Exception:  # noqa: S110
+    except Exception:
         pass
 
     json.dump({"systemMessage": message}, sys.stdout)

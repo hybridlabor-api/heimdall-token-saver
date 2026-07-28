@@ -2,6 +2,7 @@
 
 import json
 import re
+
 from ..base import Processor
 
 
@@ -33,9 +34,7 @@ class BdbUnrealProcessor(Processor):
         lines = output.splitlines()
         filtered = []
         for line in lines:
-            if any(k in line for k in ("LogUnrealEngine", "Error:", "Warning:", "Blueprint", "PCG", "Transform", "Failed")):
-                filtered.append(line)
-            elif not re.search(r"AssetRegistry|ClassIcon|Ticker|LogTemp:\s*Verbose", line):
+            if any(k in line for k in ("LogUnrealEngine", "Error:", "Warning:", "Blueprint", "PCG", "Transform", "Failed")) or not re.search(r"AssetRegistry|ClassIcon|Ticker|LogTemp:\s*Verbose", line):
                 filtered.append(line)
 
         if len(filtered) < len(lines):

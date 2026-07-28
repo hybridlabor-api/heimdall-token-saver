@@ -2,6 +2,7 @@
 
 import json
 import re
+
 from ..base import Processor
 
 
@@ -33,9 +34,7 @@ class BdbAfterEffectsProcessor(Processor):
         lines = output.splitlines()
         filtered = []
         for line in lines:
-            if any(k in line.lower() for k in ("extendscript", "error", "line", "layer", "keyframe", "exception")):
-                filtered.append(line)
-            elif not re.search(r"rendering\s+\d+%", line, re.I):
+            if any(k in line.lower() for k in ("extendscript", "error", "line", "layer", "keyframe", "exception")) or not re.search(r"rendering\s+\d+%", line, re.I):
                 filtered.append(line)
 
         if len(filtered) < len(lines):

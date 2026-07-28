@@ -3,6 +3,7 @@
 import json
 import re
 from typing import Any
+
 from src.processors.base import Processor
 
 
@@ -34,9 +35,7 @@ class BdbTouchdesignerProcessor(Processor):
             lines = output_str.splitlines()
             result = []
             for line in lines:
-                if any(err_kw in line.lower() for err_kw in ["error", "warning", "cook", "fail", "exception"]):
-                    result.append(line)
-                elif line.startswith(("/", "op:", "COMP:", "TOP:", "CHOP:", "DAT:")):
+                if any(err_kw in line.lower() for err_kw in ["error", "warning", "cook", "fail", "exception"]) or line.startswith(("/", "op:", "COMP:", "TOP:", "CHOP:", "DAT:")):
                     result.append(line)
             return "\n".join(result) if result else output_str[:400]
 

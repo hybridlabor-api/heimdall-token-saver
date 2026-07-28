@@ -56,6 +56,12 @@ ignore = [
     "SLF001",   # private member access — needed in tests
     "PERF401",  # list.extend/comprehension — less readable in test data builders
     "RUF012",   # mutable class var without ClassVar — not using dataclasses
+    "E501",     # Line too long - we format but don't strictly enforce line lengths
+    "S110",     # try-except-pass - often used for optional fallback parsers
+    "PLW2901",  # loop variable overwritten - used frequently in text processing loops
+    "PLR0917",  # too many positional arguments - utility functions
+    "ISC004",   # implicit string concatenation - acceptable in long test collections
+    "E741",     # ambiguous variable name 'l' - fine in list comprehensions for lines
 ]
 
 [tool.ruff.lint.per-file-ignores]
