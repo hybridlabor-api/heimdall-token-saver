@@ -212,12 +212,12 @@ class TestMarketplaceDetection:
 
 class TestBinScript:
     def test_bin_script_exists_and_executable(self):
-        bin_path = os.path.join(REPO_DIR, "bin", "token-saver")
+        bin_path = os.path.join(REPO_DIR, "bin", "heimdall")
         assert os.path.exists(bin_path)
         assert os.access(bin_path, os.X_OK)
 
     def test_bin_script_runs_version(self):
-        bin_path = os.path.join(REPO_DIR, "bin", "token-saver")
+        bin_path = os.path.join(REPO_DIR, "bin", "heimdall")
         result = subprocess.run(  # noqa: S603
             [bin_path, "version"],
             capture_output=True,

@@ -329,7 +329,7 @@ def install_core(use_symlink=False):
 
     install_files(data_dir, CORE_FILES, use_symlink)
     # Ensure bin/heimdall is executable in the core install
-    bin_path = os.path.join(data_dir, "bin", "token-saver")
+    bin_path = os.path.join(data_dir, "bin", "heimdall")
     if os.path.exists(bin_path) and not os.path.islink(bin_path):
         st = os.stat(bin_path)
         os.chmod(bin_path, st.st_mode | stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH)
@@ -370,14 +370,14 @@ def install_cli(use_symlink=False):
     os.makedirs(install_dir, exist_ok=True)
 
     if IS_WINDOWS:
-        src_name = "token-saver.cmd"
+        src_name = "heimdall.cmd"
         src_path = os.path.join(EXTENSION_DIR, "bin", src_name)
         dst_path = os.path.join(install_dir, src_name)
         # Also install the Python script the .cmd calls
-        py_src = os.path.join(EXTENSION_DIR, "bin", "token-saver")
-        py_dst = os.path.join(install_dir, "token-saver")
+        py_src = os.path.join(EXTENSION_DIR, "bin", "heimdall")
+        py_dst = os.path.join(install_dir, "heimdall")
     else:
-        src_name = "token-saver"
+        src_name = "heimdall"
         src_path = os.path.join(EXTENSION_DIR, "bin", src_name)
         dst_path = os.path.join(install_dir, src_name)
 
@@ -419,9 +419,9 @@ def install_cli(use_symlink=False):
 def uninstall_cli():
     """Remove the token-saver CLI command."""
     install_dir = _cli_install_dir()
-    names = ["token-saver"]
+    names = ["heimdall"]
     if IS_WINDOWS:
-        names.append("token-saver.cmd")
+        names.append("heimdall.cmd")
     for name in names:
         path = os.path.join(install_dir, name)
         if os.path.exists(path) or os.path.islink(path):

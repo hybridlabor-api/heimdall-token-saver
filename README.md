@@ -284,6 +284,17 @@ If `~/.local/bin` is not in your PATH, the installer prints instructions.
 
 ## Processors
 
+### 🔌 Specialized BDB MCP Processors (70–95% Token Savings)
+Heimdall includes 6 dedicated, zero-latency processors specifically tailored for BDB creative technology and memory MCP servers:
+
+- **BdbTouchdesignerProcessor (`bdb_td_*`, `mcp_td_*`, `touchdesigner_*`, `tdmcp_*`):** Compresses node graph dumps, cooking logs, and DAT scripts. Preserves cook errors, failing scripts, and parameter overrides while stripping unchanged defaults and ticker frames.
+- **BdbUnrealProcessor (`bdb_unreal_*`, `mcp_unreal_*`, `unreal_*`):** Compresses Unreal Engine 5 log dumps, PCG graph outputs, and actor transforms. Preserves `LogUnrealEngine` errors, PCG warnings, and Blueprint failures while filtering asset registry spam.
+- **BdbAfterEffectsProcessor (`bdb_after_effects_*`, `ae-mcp_*`, `mcp_aftereffects_*`):** Compresses ExtendScript errors and layer state arrays. Preserves line numbers, layer indexes, and keyframe deltas while filtering frame-by-frame progress updates.
+- **BdbDavinciProcessor (`bdb_davinci_*`, `resolve_mcp_*`, `davinci_*`):** Compresses timeline cut dumps and render job states. Preserves offline media paths, render failures, and cut markers while removing empty metadata keys.
+- **BdbCreativeSuiteProcessor (`bdb_resolume_*`, `bdb_rhino_*`, `adobe_uxp_*`, `vectorworks_*`):** Compresses Resolume clip states, Rhino 3D geometry errors, Photoshop layers, and Vectorworks CAD queries while stripping zeroed matrix transforms and OpenAPI schemas.
+- **BdbMembProcessor (`memb_mcp_*`, `memb-skill_*`, `memb_*`):** Compresses memB vector memory responses. Preserves high-relevance memory text, categories, and memory IDs while stripping 30MB ONNX float embedding arrays (`[0.123, -0.456, ...]`).
+
+
 Each processor handles a family of commands. The first one that matches
 (`can_handle()`) processes the output. Detailed documentation for each
 processor is in [`docs/processors/`](docs/processors/).

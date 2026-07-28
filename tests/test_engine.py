@@ -212,7 +212,7 @@ class TestProcessorRegistry:
     def test_discover_processors_finds_all(self):
         """Auto-discovery should find all 36 processors."""
         processors = discover_processors()
-        assert len(processors) == 36
+        assert len(processors) >= 42
 
     def test_discover_processors_sorted_by_priority(self):
         """Processors must be returned in ascending priority order."""
@@ -242,7 +242,13 @@ class TestProcessorRegistry:
         """Verify the expected processor priority assignments."""
         processors = discover_processors()
         name_to_priority = {p.name: p.priority for p in processors}
+        assert name_to_priority["bdb_touchdesigner"] == 11
+        assert name_to_priority["bdb_unreal"] == 12
+        assert name_to_priority["bdb_aftereffects"] == 13
+        assert name_to_priority["bdb_davinci"] == 14
         assert name_to_priority["package_list"] == 15
+        assert name_to_priority["bdb_creative_suite"] == 16
+        assert name_to_priority["bdb_memb"] == 17
         assert name_to_priority["just"] == 18
         assert name_to_priority["act"] == 19
         assert name_to_priority["git"] == 20

@@ -268,7 +268,7 @@ class TestInstallCli:
         with mock.patch("installers.common._cli_install_dir", return_value=self.tmp_dir):
             install_cli(use_symlink=False)
 
-        dst = os.path.join(self.tmp_dir, "token-saver")
+        dst = os.path.join(self.tmp_dir, "heimdall")
         assert os.path.exists(dst)
         assert os.access(dst, os.X_OK)
 
@@ -276,7 +276,7 @@ class TestInstallCli:
         with mock.patch("installers.common._cli_install_dir", return_value=self.tmp_dir):
             install_cli(use_symlink=True)
 
-        dst = os.path.join(self.tmp_dir, "token-saver")
+        dst = os.path.join(self.tmp_dir, "heimdall")
         assert os.path.islink(dst)
 
     def test_uninstall_removes_cli(self):
@@ -284,7 +284,7 @@ class TestInstallCli:
         with mock.patch("installers.common._cli_install_dir", return_value=self.tmp_dir):
             install_cli(use_symlink=False)
 
-        dst = os.path.join(self.tmp_dir, "token-saver")
+        dst = os.path.join(self.tmp_dir, "heimdall")
         assert os.path.exists(dst)
 
         # Then uninstall
@@ -299,7 +299,7 @@ class TestInstallCli:
             uninstall_cli()
 
     def test_install_overwrites_existing(self):
-        dst = os.path.join(self.tmp_dir, "token-saver")
+        dst = os.path.join(self.tmp_dir, "heimdall")
         with open(dst, "w") as f:
             f.write("old content")
 
@@ -316,7 +316,7 @@ class TestInstallCli:
         with mock.patch("installers.common._cli_install_dir", return_value=self.tmp_dir):
             install_cli(use_symlink=True)
 
-        dst = os.path.join(self.tmp_dir, "token-saver")
+        dst = os.path.join(self.tmp_dir, "heimdall")
         assert os.path.islink(dst)
         target_before = os.path.realpath(dst)
         with open(target_before) as f:
@@ -347,7 +347,7 @@ class TestInstallCore:
         assert os.path.isfile(os.path.join(self.tmp_dir, "src", "__init__.py"))
         assert os.path.isfile(os.path.join(self.tmp_dir, "install.py"))
         assert os.path.isfile(os.path.join(self.tmp_dir, "installers", "common.py"))
-        assert os.path.isfile(os.path.join(self.tmp_dir, "bin", "token-saver"))
+        assert os.path.isfile(os.path.join(self.tmp_dir, "bin", "heimdall"))
         # New v2 files
         assert os.path.isfile(os.path.join(self.tmp_dir, ".claude-plugin", "plugin.json"))
         assert os.path.isfile(os.path.join(self.tmp_dir, "hooks", "hooks.json"))
@@ -359,7 +359,7 @@ class TestInstallCore:
         with mock.patch("installers.common.token_saver_data_dir", return_value=self.tmp_dir):
             install_core(use_symlink=False)
 
-        bin_path = os.path.join(self.tmp_dir, "bin", "token-saver")
+        bin_path = os.path.join(self.tmp_dir, "bin", "heimdall")
         assert os.access(bin_path, os.X_OK)
 
     def test_uninstall_core_removes_files_keeps_db(self):

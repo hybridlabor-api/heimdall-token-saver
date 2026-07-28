@@ -72,10 +72,10 @@ def discover_processors() -> list[Processor]:
     package_name = __name__
 
     # Import all modules in this package (skip __init__ and base)
-    for _finder, module_name, _is_pkg in pkgutil.iter_modules(package_path):
-        if module_name in ("base",):
+    for _finder, module_name, _is_pkg in pkgutil.walk_packages(package_path, package_name + '.'):
+        if module_name.endswith(".base") or module_name == "base":
             continue
-        importlib.import_module(f".{module_name}", package_name)
+        importlib.import_module(module_name if module_name.startswith(package_name) else f".{module_name}", package_name)
 
     # Load user-defined processors
     user_dir = _get_user_processors_dir()
