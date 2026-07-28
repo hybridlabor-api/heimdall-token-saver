@@ -1,5 +1,9 @@
 ![Heimdall Token Saver](header.png)
 
+🌐 **Language / Sprache / Idioma**: **English** | [ 🇩🇪 Deutsch ](README.de.md) | [ 🇵🇹 Português ](README.pt.md)
+
+---
+
 # Heimdall Token Saver
 
 [![CI](https://github.com/hybridlabor-api/heimdall-token-saver/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/heimdall-token-saver/actions)
