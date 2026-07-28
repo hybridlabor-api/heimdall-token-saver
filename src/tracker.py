@@ -388,7 +388,7 @@ class SavingsTracker:
         lifetime = self.get_lifetime_stats()
         session = self.get_session_stats()
 
-        parts = ["[token-saver]"]
+        parts = ["[heimdall]"]
 
         if lifetime["commands"] > 0:
             saved_tokens = self._chars_to_tokens(lifetime["saved"])

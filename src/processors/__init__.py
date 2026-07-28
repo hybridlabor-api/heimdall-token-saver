@@ -46,7 +46,7 @@ def _load_user_processors(user_dir: str) -> None:
 def _debug_log(msg: str) -> None:
     """Print a debug message if TOKEN_SAVER_DEBUG is set."""
     if os.environ.get("TOKEN_SAVER_DEBUG", "").lower() in ("1", "true", "yes"):
-        print(f"[token-saver] {msg}", file=sys.stderr)
+        print(f"[heimdall] {msg}", file=sys.stderr)
 
 
 def _get_user_processors_dir() -> str:

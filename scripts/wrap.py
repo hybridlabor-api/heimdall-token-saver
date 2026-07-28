@@ -161,7 +161,7 @@ def _run_command(
                 partial_out, partial_err = child_proc.communicate(timeout=5)
             except (subprocess.TimeoutExpired, ValueError, OSError):
                 partial_out, partial_err = "", ""
-        note = f"[token-saver] Command timed out after {timeout}s (partial output shown)"
+        note = f"[heimdall] Command timed out after {timeout}s (partial output shown)"
         print(note, file=sys.stderr)
         partial_out = (partial_out or "") + f"\n{note}\n"
         return partial_out, partial_err or "", 124
@@ -171,7 +171,7 @@ def _run_command(
             child_proc.wait()
         sys.exit(130)
     except OSError as e:
-        print(f"[token-saver] Failed to execute: {e}", file=sys.stderr)
+        print(f"[heimdall] Failed to execute: {e}", file=sys.stderr)
         sys.exit(127)
     finally:
         signal.signal(signal.SIGINT, original_sigint)
@@ -189,7 +189,7 @@ def _cap_output(output: str) -> str:
     cap = config.get("max_output_bytes")
     if not cap or cap <= 0 or len(output) <= cap:
         return output
-    note = f"\n[token-saver] Output truncated at {cap:,} chars (was {len(output):,})\n"
+    note = f"\n[heimdall] Output truncated at {cap:,} chars (was {len(output):,})\n"
     return output[:cap] + note
 
 

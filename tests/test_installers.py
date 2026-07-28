@@ -573,7 +573,7 @@ class TestRegisterPlugin:
         assert "token-saver-marketplace" in known
         entry = known["token-saver-marketplace"]
         assert entry["source"]["source"] == "github"
-        assert entry["source"]["repo"] == "ppgranger/token-saver"
+        assert entry["source"]["repo"] == "hybridlabor-api/heimdall-token-saver"
         assert entry["source"]["ref"] == "production"
         assert entry["installLocation"] == self.tmp_marketplace
 
@@ -721,7 +721,7 @@ class TestUnregisterPlugin:
             json.dump(
                 {
                     "token-saver-marketplace": {
-                        "source": {"source": "github", "repo": "ppgranger/token-saver"},
+                        "source": {"source": "github", "repo": "hybridlabor-api/heimdall-token-saver"},
                     },
                 },
                 f,

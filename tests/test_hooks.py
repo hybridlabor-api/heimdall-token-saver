@@ -142,7 +142,7 @@ class TestHookPretool:
     def test_self_wrapping_excluded(self):
         assert not is_compressible("python3 wrap.py git status")
         assert not is_compressible("python3 /path/to/token_saver/wrap.py ls")
-        assert not is_compressible("token-saver stats")
+        assert not is_compressible("heimdall stats")
 
     def test_token_saver_in_path_not_excluded(self):
         """token-saver in a path argument must not trigger the self-wrap guard."""
@@ -556,7 +556,7 @@ class TestChainedCommands:
 
     def test_self_wrap_guard_in_chain(self):
         assert not is_compressible("cd /project && python3 wrap.py git status")
-        assert not is_compressible("cd /project && token-saver stats")
+        assert not is_compressible("cd /project && heimdall stats")
 
     # --- Real-world Claude Code patterns ---
 

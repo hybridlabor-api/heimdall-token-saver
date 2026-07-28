@@ -3,10 +3,10 @@
   "description": "Automatically compresses verbose CLI output (git, docker, npm, terraform, kubectl, etc.) to save tokens in Claude Code sessions. 32 specialized processors with content-aware compression.",
   "version": "2.6.3",
   "author": {
-    "name": "ppgranger",
-    "url": "https://github.com/ppgranger"
+    "name": "hybridlabor-api",
+    "url": "https://github.com/hybridlabor-api"
   },
-  "repository": "https://github.com/ppgranger/token-saver",
+  "repository": "https://github.com/hybridlabor-api/heimdall-token-saver",
   "license": "Apache-2.0",
   "keywords": [
     "token-optimization",

@@ -84,13 +84,13 @@ class TestSavingsTracker:
 
     def test_format_stats_no_data(self):
         msg = self.tracker.format_stats_message()
-        assert "[token-saver]" in msg
+        assert "[heimdall]" in msg
         assert "No compressions" in msg
 
     def test_format_stats_with_data(self):
         self.tracker.record_saving("git status", "git", 5000, 500, "claude_code")
         msg = self.tracker.format_stats_message()
-        assert "[token-saver]" in msg
+        assert "[heimdall]" in msg
         assert "Lifetime" in msg
 
     def test_format_tokens(self):

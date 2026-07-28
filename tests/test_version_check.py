@@ -40,7 +40,7 @@ class TestCheckForUpdate:
         result = check_for_update(fetch_fn=lambda: "99.0.0")
         assert result is not None
         assert "99.0.0" in result
-        assert "token-saver update" in result
+        assert "heimdall update" in result
 
     def test_already_up_to_date(self):
         from src import __version__

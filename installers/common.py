@@ -296,8 +296,8 @@ CORE_FILES = [
     "installers/claude.py",
     "installers/antigravity.py",
     "install.py",
-    "bin/token-saver",
-    "bin/token-saver.cmd",
+    "bin/heimdall",
+    "bin/heimdall.cmd",
     # Claude Code plugin structure
     ".claude-plugin/plugin.json",
     ".claude-plugin/marketplace.json",
@@ -328,7 +328,7 @@ def install_core(use_symlink=False):
         print(f"  REMOVED legacy {legacy_claude}")
 
     install_files(data_dir, CORE_FILES, use_symlink)
-    # Ensure bin/token-saver is executable in the core install
+    # Ensure bin/heimdall is executable in the core install
     bin_path = os.path.join(data_dir, "bin", "token-saver")
     if os.path.exists(bin_path) and not os.path.islink(bin_path):
         st = os.stat(bin_path)

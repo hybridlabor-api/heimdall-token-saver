@@ -6,7 +6,7 @@ description: "Configure and diagnose token-saver compression settings. Use when 
 # Token-Saver Configuration & Diagnostics
 
 ## Check Status
-Run `token-saver stats` to see compression statistics for the current and all sessions.
+Run `heimdall stats` to see compression statistics for the current and all sessions.
 
 ## Configuration
 Token-saver config is stored in `~/.token-saver/config.json`. Available settings:

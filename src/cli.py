@@ -27,7 +27,7 @@ def _is_marketplace_managed(repo_dir: str) -> bool:
     Marketplace-managed installs live at
     ``~/.claude/plugins/cache/<marketplace>/token-saver`` (or the Windows
     %APPDATA% equivalent).  Self-updating those via git/tarball fights the
-    marketplace, so ``token-saver update`` should defer to ``/plugin update``.
+    marketplace, so ``heimdall update`` should defer to ``/plugin update``.
     """
     parts = [p.lower() for p in os.path.normpath(os.path.abspath(repo_dir)).split(os.sep)]
     return any(parts[i] == "plugins" and parts[i + 1] == "cache" for i in range(len(parts) - 1))
@@ -200,8 +200,8 @@ def _update_via_tarball(repo_dir, version):
 
     # Try both tag formats: v1.2.0 and 1.2.0 (mirrors _update_via_git behavior)
     urls = [
-        f"https://github.com/ppgranger/token-saver/archive/refs/tags/v{version}.tar.gz",
-        f"https://github.com/ppgranger/token-saver/archive/refs/tags/{version}.tar.gz",
+        f"https://github.com/hybridlabor-api/heimdall-token-saver/archive/refs/tags/v{version}.tar.gz",
+        f"https://github.com/hybridlabor-api/heimdall-token-saver/archive/refs/tags/{version}.tar.gz",
     ]
 
     tarball_data = None
@@ -440,7 +440,7 @@ def cmd_explain(args):
 def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        prog="token-saver",
+        prog="heimdall",
         description="Token-Saver: compress verbose tool outputs to save tokens",
     )
     subparsers = parser.add_subparsers(dest="command")

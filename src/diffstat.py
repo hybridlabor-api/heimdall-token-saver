@@ -1,6 +1,6 @@
 """Structured diff summary between original and compressed output.
 
-Used by ``token-saver benchmark`` and wrap.py ``--dry-run`` to show *what*
+Used by ``heimdall benchmark`` and wrap.py ``--dry-run`` to show *what*
 compression removed, not just the headline ratio.  Works purely from the
 before/after strings (no per-processor instrumentation), so it stays accurate
 for every processor without coupling to their internals.

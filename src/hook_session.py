@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SessionStart hook: display token-saver stats."""
+"""SessionStart hook: display heimdall stats."""
 
 import json
 import os

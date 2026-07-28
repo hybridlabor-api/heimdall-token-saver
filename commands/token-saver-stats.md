@@ -3,10 +3,10 @@ name: stats
 description: "Show token-saver compression statistics and savings"
 ---
 
-Run the token-saver stats command to display savings:
+Run the heimdall stats command to display savings:
 
 ```bash
-token-saver stats
+heimdall stats
 ```
 
 If the `token-saver` CLI is not in PATH, use:
