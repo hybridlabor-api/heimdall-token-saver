@@ -1,0 +1,17 @@
+{
+  "name": "@hybridlabor-api/heimdall-token-saver",
+  "version": "2.6.3",
+  "description": "Ultra-fast context compression engine for CLI tool outputs in AI agent workflows.",
+  "bin": {
+    "heimdall-token-saver": "bin/install.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hybridlabor-api/heimdall-token-saver.git"
+  },
+  "author": "BDB DEV",
+  "license": "ISC"
+}
