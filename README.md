@@ -2,11 +2,11 @@
 
 # Heimdall Token Saver
 
-[![CI](https://github.com/hybridlabor-api/heimdall-token-saver/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/heimdall-token-saver/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-94%25-brightgreen)](tests/)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://python.org)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
-[![Avg Savings](docs/assets/badge-savings.svg)](docs/processors/)
+[![CI](https://github.com/hybridlabor-api/heimdall-token-saver/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/heimdall-token-saver/actions)
+[![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/heimdall-token-saver.svg)](https://www.npmjs.com/package/@hybridlabor-api/heimdall-token-saver)
+[![runtime](https://img.shields.io/badge/python-3.9+-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
+[![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![savings](https://img.shields.io/badge/avg%20savings-60%25--99%25-brightgreen.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 
 **Save more tokens & get over 60% more coding power out of your AI subscription (Claude Code, Codex, Antigravity).**
 

@@ -13,5 +13,5 @@
     "url": "git+https://github.com/hybridlabor-api/heimdall-token-saver.git"
   },
   "author": "BDB DEV",
-  "license": "ISC"
+  "license": "Apache-2.0"
 }
