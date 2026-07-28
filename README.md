@@ -193,6 +193,13 @@ python3 install.py --target antigravity    # Antigravity CLI only
 python3 install.py --target both      # Both platforms
 ```
 
+### Method 3: Via NPX (Global Installer)
+
+You can install Heimdall Token Saver globally using `npx`:
+```bash
+npx -y @hybridlabor-api/heimdall-token-saver
+```
+
 The manual installer registers token-saver as a native Claude Code plugin
 (equivalent to `/plugin install`). It appears in `/plugin` list and hooks,
 skills, and commands are managed natively by Claude Code.
