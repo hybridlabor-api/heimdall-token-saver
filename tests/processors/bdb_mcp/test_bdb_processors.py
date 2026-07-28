@@ -109,6 +109,8 @@ class TestBdbCreativeSuiteProcessor:
         self.proc = BdbCreativeSuiteProcessor()
 
     def test_can_handle(self):
+        assert self.proc.can_handle("bdb_blender_render")
+        assert self.proc.can_handle("blender-mcp_mesh")
         assert self.proc.can_handle("bdb_resolume_clip")
         assert self.proc.can_handle("bdb_rhino_mesh")
 
