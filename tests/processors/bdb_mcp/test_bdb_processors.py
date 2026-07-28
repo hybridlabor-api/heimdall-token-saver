@@ -1,9 +1,9 @@
+"""Unit tests for BDB MCP Processors."""
+
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
-
-"""Unit tests for BDB MCP Processors."""
 
 import json
 from src.processors.bdb_mcp.touchdesigner import BdbTouchdesignerProcessor
@@ -12,7 +12,6 @@ from src.processors.bdb_mcp.aftereffects import BdbAfterEffectsProcessor
 from src.processors.bdb_mcp.davinci import BdbDavinciProcessor
 from src.processors.bdb_mcp.creative_suite import BdbCreativeSuiteProcessor
 from src.processors.bdb_mcp.memb import BdbMembProcessor
-
 
 class TestBdbTouchdesignerProcessor:
     def setup_method(self):

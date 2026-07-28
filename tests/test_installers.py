@@ -721,7 +721,10 @@ class TestUnregisterPlugin:
             json.dump(
                 {
                     "token-saver-marketplace": {
-                        "source": {"source": "github", "repo": "hybridlabor-api/heimdall-token-saver"},
+                        "source": {
+                            "source": "github",
+                            "repo": "hybridlabor-api/heimdall-token-saver",
+                        },
                     },
                 },
                 f,
