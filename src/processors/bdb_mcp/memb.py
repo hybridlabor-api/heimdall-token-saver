@@ -18,7 +18,10 @@ class BdbMembProcessor(Processor):
 
     def can_handle(self, command: str) -> bool:
         cmd_lower = command.lower()
-        return any(cmd_lower.startswith(p) for p in ("memb_mcp", "memb-skill", "memb_")) or "memb" in cmd_lower
+        return (
+            any(cmd_lower.startswith(p) for p in ("memb_mcp", "memb-skill", "memb_"))
+            or "memb" in cmd_lower
+        )
 
     def process(self, command: str, output: str) -> str:
         if not output or not output.strip():
@@ -34,7 +37,11 @@ class BdbMembProcessor(Processor):
         lines = output.splitlines()
         filtered = []
         for line in lines:
-            line = re.sub(r"\[(?:\s*-?\d+\.\d+,\s*){3,}-?\d+\.\d+\s*\]", "[...embedding array truncated...]", line)
+            line = re.sub(
+                r"\[(?:\s*-?\d+\.\d+,\s*){3,}-?\d+\.\d+\s*\]",
+                "[...embedding array truncated...]",
+                line,
+            )
             filtered.append(line)
 
         return "\n".join(filtered)
@@ -44,7 +51,9 @@ class BdbMembProcessor(Processor):
             if isinstance(obj, dict):
                 cleaned = {}
                 for k, v in obj.items():
-                    if k in ("embedding", "embeddings", "vector", "distance_matrix") and isinstance(v, list):
+                    if k in ("embedding", "embeddings", "vector", "distance_matrix") and isinstance(
+                        v, list
+                    ):
                         cleaned[k] = f"[{len(v)} float embeddings truncated]"
                     else:
                         cleaned[k] = _clean_obj(v)

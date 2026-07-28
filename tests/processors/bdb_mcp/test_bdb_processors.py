@@ -33,8 +33,8 @@ class TestBdbTouchdesignerProcessor:
             "nodes": [{"name": f"node{i}"} for i in range(50)],
             "parameters": {
                 "file": {"value": "shader.glsl", "is_default": False},
-                "unused": {"value": "0", "is_default": True}
-            }
+                "unused": {"value": "0", "is_default": True},
+            },
         }
         res = self.proc.process("bdb_td_get_nodes", json.dumps(sample))
         data = json.loads(res)
@@ -56,7 +56,7 @@ class TestBdbUnrealProcessor:
         sample = {
             "actor_name": "BP_Player",
             "errors": ["Blueprint compilation failed"],
-            "asset_registry": [{"name": f"asset{i}"} for i in range(100)]
+            "asset_registry": [{"name": f"asset{i}"} for i in range(100)],
         }
         res = self.proc.process("bdb_unreal_spawn_actor", json.dumps(sample))
         data = json.loads(res)
@@ -78,8 +78,8 @@ class TestBdbAfterEffectsProcessor:
             "extendscript_error": "SyntaxError at line 45",
             "layers": [
                 {"index": 1, "name": "TextLayer", "unused": "xyz"},
-                {"index": 2, "name": "Null", "unused": "abc"}
-            ]
+                {"index": 2, "name": "Null", "unused": "abc"},
+            ],
         }
         res = self.proc.process("bdb_after_effects_render", json.dumps(sample))
         data = json.loads(res)
@@ -97,10 +97,7 @@ class TestBdbDavinciProcessor:
         assert self.proc.can_handle("resolve_mcp_render")
 
     def test_compress_json(self):
-        sample = {
-            "offline_media": ["/Volumes/Media/clip01.mov"],
-            "timeline_name": "MainCut"
-        }
+        sample = {"offline_media": ["/Volumes/Media/clip01.mov"], "timeline_name": "MainCut"}
         res = self.proc.process("bdb_davinci_timeline", json.dumps(sample))
         data = json.loads(res)
         assert data["timeline_name"] == "MainCut"
@@ -118,10 +115,7 @@ class TestBdbCreativeSuiteProcessor:
         assert self.proc.can_handle("bdb_rhino_mesh")
 
     def test_compress_json(self):
-        sample = {
-            "clip_id": 42,
-            "matrix_transform": [[1,0,0],[0,1,0],[0,0,1]]
-        }
+        sample = {"clip_id": 42, "matrix_transform": [[1, 0, 0], [0, 1, 0], [0, 0, 1]]}
         res = self.proc.process("bdb_resolume_clip", json.dumps(sample))
         data = json.loads(res)
         assert data["clip_id"] == 42
@@ -140,7 +134,7 @@ class TestBdbMembProcessor:
         sample = {
             "memory_id": "mem_12345",
             "text": "User prefers dark mode and React App Router",
-            "embedding": [0.123, -0.456, 0.789, 0.012, -0.999, 0.555, 0.333]
+            "embedding": [0.123, -0.456, 0.789, 0.012, -0.999, 0.555, 0.333],
         }
         res = self.proc.process("memb_mcp_query", json.dumps(sample))
         data = json.loads(res)

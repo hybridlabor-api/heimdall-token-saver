@@ -7,7 +7,9 @@ import urllib.request
 
 from src import __version__
 
-_GITHUB_API_URL = "https://api.github.com/repos/hybridlabor-api/heimdall-token-saver/releases/latest"
+_GITHUB_API_URL = (
+    "https://api.github.com/repos/hybridlabor-api/heimdall-token-saver/releases/latest"
+)
 
 # Cache the remote version lookup so the SessionStart hook doesn't hit GitHub
 # on every new session (which both adds latency and risks rate-limiting).

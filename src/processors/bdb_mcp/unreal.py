@@ -18,7 +18,10 @@ class BdbUnrealProcessor(Processor):
 
     def can_handle(self, command: str) -> bool:
         cmd_lower = command.lower()
-        return any(cmd_lower.startswith(p) for p in ("bdb_unreal_", "mcp_unreal_", "unreal_")) or "unreal" in cmd_lower
+        return (
+            any(cmd_lower.startswith(p) for p in ("bdb_unreal_", "mcp_unreal_", "unreal_"))
+            or "unreal" in cmd_lower
+        )
 
     def process(self, command: str, output: str) -> str:
         if not output or not output.strip():
@@ -34,20 +37,42 @@ class BdbUnrealProcessor(Processor):
         lines = output.splitlines()
         filtered = []
         for line in lines:
-            if any(k in line for k in ("LogUnrealEngine", "Error:", "Warning:", "Blueprint", "PCG", "Transform", "Failed")) or not re.search(r"AssetRegistry|ClassIcon|Ticker|LogTemp:\s*Verbose", line):
+            if any(
+                k in line
+                for k in (
+                    "LogUnrealEngine",
+                    "Error:",
+                    "Warning:",
+                    "Blueprint",
+                    "PCG",
+                    "Transform",
+                    "Failed",
+                )
+            ) or not re.search(r"AssetRegistry|ClassIcon|Ticker|LogTemp:\s*Verbose", line):
                 filtered.append(line)
 
         if len(filtered) < len(lines):
-            filtered.insert(0, f"[Heimdall BDB-Unreal] Compressed {len(lines)} lines -> {len(filtered)} lines:")
+            filtered.insert(
+                0, f"[Heimdall BDB-Unreal] Compressed {len(lines)} lines -> {len(filtered)} lines:"
+            )
         return "\n".join(filtered)
 
     def _compress_unreal_dict(self, data: dict) -> str:
         cleaned = {}
         for k, v in data.items():
-            if k in ("errors", "warnings", "actor_name", "transform", "pcg_status", "blueprint_errors"):
+            if k in (
+                "errors",
+                "warnings",
+                "actor_name",
+                "transform",
+                "pcg_status",
+                "blueprint_errors",
+            ):
                 cleaned[k] = v
             elif k == "asset_registry":
-                cleaned["asset_registry"] = f"[{len(v)} assets]" if isinstance(v, list) else "filtered assets"
+                cleaned["asset_registry"] = (
+                    f"[{len(v)} assets]" if isinstance(v, list) else "filtered assets"
+                )
             elif v not in (None, [], {}, ""):
                 cleaned[k] = v
         return json.dumps(cleaned, indent=2)

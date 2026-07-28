@@ -110,8 +110,7 @@ from .base import Processor
 
 
 class MyToolProcessor(Processor):
-
-    priority = 40          # See priority conventions below
+    priority = 40  # See priority conventions below
     hook_patterns = [
         r"^mytool\s+(subcommand1|subcommand2)\b",
     ]
@@ -182,7 +181,6 @@ processor has its own test class. Add a new class following this pattern:
 
 ```python
 class TestMyToolProcessor:
-
     def setup_method(self):
         self.p = MyToolProcessor()
 
@@ -227,9 +225,7 @@ your processor is picked up by the engine:
 ```python
 def test_mytool_output_compressed(self):
     output = "\n".join(f"item {i}" for i in range(100))
-    compressed, processor, was_compressed = self.engine.compress(
-        "mytool subcommand1", output
-    )
+    compressed, processor, was_compressed = self.engine.compress("mytool subcommand1", output)
     assert was_compressed
     assert processor == "my_tool"
 ```
