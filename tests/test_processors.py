@@ -460,9 +460,15 @@ class TestTestOutputProcessor:
                 "tests/test_a.py::test3 PASSED",
                 "=" * 40 + " warnings summary " + "=" * 40,
                 "tests/test_a.py::test1",
-                "  /usr/lib/python3/site-packages/pkg/mod.py:10: DeprecationWarning: func_a() deprecated",
+                (
+                    "  /usr/lib/python3/site-packages/pkg/mod.py:10: "
+                    "DeprecationWarning: func_a() deprecated"
+                ),
                 "tests/test_a.py::test2",
-                "  /usr/lib/python3/site-packages/pkg/mod.py:20: DeprecationWarning: func_b() deprecated",
+                (
+                    "  /usr/lib/python3/site-packages/pkg/mod.py:20: "
+                    "DeprecationWarning: func_b() deprecated"
+                ),
                 "tests/test_a.py::test3",
                 "  /usr/lib/python3/site-packages/pkg/mod.py:30: UserWarning: check config",
                 "-- Docs: https://docs.pytest.org/en/stable/warnings.html",
@@ -2173,7 +2179,10 @@ class TestKubectlProcessor:
                 "  Type    Reason     Age   From               Message",
                 "  Normal  Scheduled  10m   default-scheduler  Successfully assigned",
                 "  Normal  Pulled     10m   kubelet            Container image pulled",
-                "  Warning BackOff    5m    kubelet            Back-off restarting failed container",
+                (
+                    "  Warning BackOff    5m    kubelet            "
+                    "Back-off restarting failed container"
+                ),
             ]
         )
         result = self.p.process("kubectl describe pod my-pod", output)

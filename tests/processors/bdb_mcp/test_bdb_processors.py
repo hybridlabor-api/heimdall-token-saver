@@ -1,17 +1,21 @@
 """Unit tests for BDB MCP Processors."""
 
+import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+# Add root directory to sys.path
+sys.path.insert(
+    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+)
 
-import json
+from src.processors.bdb_mcp.aftereffects import BdbAfterEffectsProcessor
+from src.processors.bdb_mcp.creative_suite import BdbCreativeSuiteProcessor
+from src.processors.bdb_mcp.davinci import BdbDavinciProcessor
+from src.processors.bdb_mcp.memb import BdbMembProcessor
 from src.processors.bdb_mcp.touchdesigner import BdbTouchdesignerProcessor
 from src.processors.bdb_mcp.unreal import BdbUnrealProcessor
-from src.processors.bdb_mcp.aftereffects import BdbAfterEffectsProcessor
-from src.processors.bdb_mcp.davinci import BdbDavinciProcessor
-from src.processors.bdb_mcp.creative_suite import BdbCreativeSuiteProcessor
-from src.processors.bdb_mcp.memb import BdbMembProcessor
+
 
 class TestBdbTouchdesignerProcessor:
     def setup_method(self):

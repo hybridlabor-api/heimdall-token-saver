@@ -64,7 +64,7 @@ def _fetch_latest_version(fetch_fn=None, timeout=1):
     if fetch_fn is not None:
         return fetch_fn()
 
-    req = urllib.request.Request(  # noqa: S310
+    req = urllib.request.Request(
         _GITHUB_API_URL,
         headers={"Accept": "application/vnd.github.v3+json", "User-Agent": "token-saver"},
     )
