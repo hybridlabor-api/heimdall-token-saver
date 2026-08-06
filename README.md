@@ -36,6 +36,10 @@ When an AI agent reads raw CLI logs:
 
 ### Before & After Savings
 
+<p align="center">
+  <img src="bdb_savings_graph_sketch.jpg" alt="Token Savings Graph" width="800"/>
+</p>
+
 | Command / MCP Tool | Raw Output | Compressed Output | Token Savings |
 |-------------------|-----------|-------------------|---------------|
 | `git diff` (large refactor) | 2,270 tokens | 909 tokens | **60%** |
