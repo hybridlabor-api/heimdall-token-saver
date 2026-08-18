@@ -25,7 +25,23 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install --no-fund --no-audit
 
+      - name: Check if version already published
+        id: check_version
+        run: |
+          LOCAL_VER=$(node -p "require('./package.json').version")
+          REMOTE_VER=$(npm view $(node -p "require('./package.json').name") version 2>/dev/null || echo "none")
+          if [ "$LOCAL_VER" = "$REMOTE_VER" ]; then
+            echo "Already published $LOCAL_VER. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "New version $LOCAL_VER (remote: $REMOTE_VER). Publishing."
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish package
+        if: steps.check_version.outputs.skip != 'true'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
