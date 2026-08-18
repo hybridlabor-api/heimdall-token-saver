@@ -8,11 +8,21 @@
 
 [![CI](https://github.com/hybridlabor-api/heimdall-token-saver/actions/workflows/ci.yml/badge.svg)](https://github.com/hybridlabor-api/heimdall-token-saver/actions)
 [![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/heimdall-token-saver.svg)](https://www.npmjs.com/package/@hybridlabor-api/heimdall-token-saver)
+[![Version](https://img.shields.io/badge/version-2.6.3-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 [![runtime](https://img.shields.io/badge/python-3.9+-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![savings](https://img.shields.io/badge/avg%20savings-60%25--99%25-brightgreen.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 
 **Save more tokens & get over 60% more coding power out of your AI subscription (Claude Code, Codex, Antigravity).**
+
+---
+
+## 📚 Documentation Wiki
+
+Comprehensive developer manuals and design specifications are maintained in the project's **OpenWiki** directory:
+- 📐 **[System Architecture](.openwiki/ARCHITECTURE.md):** CLI interceptor architecture, compression pipeline, and processor modules.
+- 📋 **[Development Conventions](.openwiki/CONVENTIONS.md):** Python coding standards, ruff linting, and zero-loss compression invariants.
+- 📜 **[Changelog](.openwiki/CHANGELOG.md):** Version highlights and release history.
 
 ---
 
