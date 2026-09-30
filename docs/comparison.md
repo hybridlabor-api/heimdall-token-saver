@@ -19,12 +19,12 @@ Token-Saver focuses specifically on **command output compression** — it doesn'
 
 ### Token-Saver
 
-Token-Saver intercepts command output and applies **deterministic, per-command compression** using 36 specialized processors. It understands the structure of `git diff`, `pytest`, `terraform plan`, and other common CLI outputs, and removes only noise (progress bars, passing tests, installation logs) while preserving all actionable information (errors, diffs, warnings).
+Token-Saver intercepts command output and applies **deterministic, per-command compression** using 42 specialized processors (incl. 6 BDB MCP processors that only match Bash command names). It understands the structure of `git diff`, `pytest`, `terraform plan`, and other common CLI outputs, and removes only noise (progress bars, passing tests, installation logs) while aiming to preserve actionable information (errors, diffs, warnings); very long outputs can lose middle lines, including errors (see README "Precision Guarantees").
 
 - Zero latency overhead (regex and string parsing only)
 - Fully deterministic — same input always produces same output
 - Works offline, no external dependencies
-- 853 tests including precision tests that verify critical data survives compression
+- Precision tests (`tests/test_precision.py`) covering key data such as filenames, hashes, failing tests and error lines
 - Supports both Claude Code and Antigravity CLI
 
 ### cc_token_saver_mcp

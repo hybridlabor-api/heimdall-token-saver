@@ -21,7 +21,7 @@ Heimdall Token Saver is an ultra-fast context compression engine designed to int
                │  - Specialized Processors     │
                │  - Noise & Spinner Stripper   │
                └───────────────┬───────────────┘
-                               │ (60% - 99% Compression)
+                               │ (savings vary by command)
                                ▼
                ┌───────────────────────────────┐
                │    Clean Compressed Context   │
