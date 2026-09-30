@@ -11,9 +11,9 @@
 [![Version](https://img.shields.io/badge/version-2.6.3-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 [![runtime](https://img.shields.io/badge/python-3.9+-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![savings](https://img.shields.io/badge/avg%20savings-60%25--99%25-brightgreen.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
+[![savings](https://img.shields.io/badge/savings-see%20fixtures-lightgrey.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 
-**Save more tokens & get over 60% more coding power out of your AI subscription (Claude Code, Codex, Antigravity).**
+**Compress noisy CLI output before it reaches your AI agent (Claude Code, Codex, Antigravity) to save context tokens.**
 
 ---
 
@@ -26,20 +26,20 @@ Comprehensive developer manuals and design specifications are maintained in the 
 
 ---
 
-## ⚡ WHY HEIMDALL // Cut your AI coding costs by 60-99% on CLI output
+## ⚡ WHY HEIMDALL // Cut token use on noisy CLI output
 
-AI coding subscriptions (**Claude Code, OpenAI Codex / ChatGPT, Google Antigravity**) are constrained by context window sizes and strict hourly usage limits. Every time your AI agent executes a terminal command — `git diff`, `pytest`, `npm install`, `docker`, `terraform plan`, or `kubectl` — over **90% of the raw output is pure noise** (download spinners, passing tests, progress bars, and lockfile text).
+AI coding subscriptions (**Claude Code, OpenAI Codex / ChatGPT, Google Antigravity**) are constrained by context window sizes and strict hourly usage limits. Every time your AI agent executes a terminal command — `git diff`, `pytest`, `npm install`, `docker`, `terraform plan`, or `kubectl` — a large share of the raw output is often noise (download spinners, passing tests, progress bars, and lockfile text).
 
 ### The Problem With Raw Terminal Output
 When an AI agent reads raw CLI logs:
-1. **You waste your subscription quotas:** Your 5-hour rate limits expire up to **5x faster** because the model reads thousands of lines of useless progress bars.
+1. **You waste your subscription quotas:** Your rate limits are consumed faster because the model reads thousands of lines of progress bars.
 2. **Context window pollution:** The LLM's working memory gets cluttered with non-actionable boilerplate, causing the agent to forget earlier instructions and hallucinate fixes.
 3. **Higher API costs:** If you pay per 1M tokens, every `pytest` or `npm install` run burns money on passing tests and download indicators.
 
 ### The Heimdall Solution
 **Heimdall Token Saver** acts as an intelligent, zero-latency local context firewall between your CLI tools and your AI agent:
-- 🛡 **100% Signal, 0% Noise:** Strips out progress bars, passing test logs, and spinners while **guaranteeing zero information loss**. Every stack trace, error message, failing assertion, and diff survives intact.
-- 🚀 **Maximized Subscription Value:** Gives you **over 60% higher effective context capacity**, letting you run complex multi-file refactors without hitting hourly limit caps.
+- 🛡 **Noise removal with bounded loss:** Strips progress bars, passing test logs, and spinners. Errors and failures are preserved by the specialised processors, but compression is lossy: see [What is and is not guaranteed](#precision-guarantees).
+- 🚀 **Less context used:** Savings depend on the command; see the reproducible fixture table below. No subscription-wide figure is claimed.
 - ⚡ **Faster Agent Responses:** Less text for LLMs to read means faster response times and razor-sharp debugging focus.
 
 ---
@@ -50,18 +50,19 @@ When an AI agent reads raw CLI logs:
   <img src="bdb_savings_graph_sketch.jpg" alt="Token Savings Graph" width="800"/>
 </p>
 
-| Command / MCP Tool | Raw Output | Compressed Output | Token Savings |
-|-------------------|-----------|-------------------|---------------|
-| `git diff` (large refactor) | 2,270 tokens | 909 tokens | **60%** |
-| `pytest` (500 tests, 2 failures) | 6,744 tokens | 308 tokens | **95%** |
-| `npm install` (220 packages) | 3,844 tokens | 4 tokens | **99%** |
-| `bdb_td_nodes` (TouchDesigner dump) | 12,400 tokens | 620 tokens | **95%** |
-| `bdb_unreal_actor` (Unreal Engine PCG) | 8,900 tokens | 445 tokens | **95%** |
-| `bdb_after_effects` (AE keyframes) | 6,500 tokens | 455 tokens | **93%** |
-| `bdb_davinci_timeline` (Resolve dump) | 9,100 tokens | 728 tokens | **92%** |
-| `memb_search_memory` (memB vector search) | 5,400 tokens | 324 tokens | **94%** |
+Numbers below are produced by `python3 examples/demo.py`, which runs the engine on the fixtures in `examples/fixtures/` (tokens = chars / 4). They are single small fixtures, not a benchmark: real savings vary widely by command and output.
 
-> 🔮 **With Heimdall BDB MCP Processors: You cut token consumption by 90-95% per MCP tool call, allowing your agent to run 10x longer without hitting context limits.**
+| Fixture (`examples/fixtures/`) | Raw | Compressed | Savings |
+|---|---|---|---|
+| `git diff` (large_git_diff.txt) | 3,323 tokens | 3,046 tokens | 8.3% |
+| `pytest`, 50 pass / 2 fail (pytest_output.txt) | 1,548 tokens | 381 tokens | 75.4% |
+| `terraform plan` (terraform_plan.txt) | 3,268 tokens | 3,039 tokens | 7.0% |
+| `npm install` (npm_install.txt) | 798 tokens | 4 tokens | 99.5% |
+| `kubectl get pods -A` (kubectl_pods.txt) | 1,393 tokens | 79 tokens | 94.3% |
+
+The BDB MCP processors (TouchDesigner, Unreal, After Effects, DaVinci, memB, ...) have **no fixtures or benchmark**, so no savings figure is given for them. Earlier versions of this README listed 92-95% for these tools; those numbers were not reproducible and were removed.
+
+<!-- TODO: add fixtures and a benchmark for the BDB MCP processors and for a real-session corpus; only then publish aggregate savings numbers. -->
 
 > Run `heimdall benchmark <command>` to measure real-time savings on your own workloads.
 
@@ -82,14 +83,14 @@ Heimdall Token Saver sits transparently between your terminal commands and AI co
                              ▼
  ┌────────────────────────────────────────────────────────┐
  │            HEIMDALL TOKEN SAVER ENGINE                 │
- │     36 Specialized Local Processors (Zero Latency)    │
+ │     42 Specialized Local Processors (Zero Latency)    │
  └───────────────────────────┬────────────────────────────┘
                              │
             ┌────────────────┴────────────────┐
             │                                 │
             ▼                                 ▼
    ┌─────────────────┐               ┌──────────────────┐
-   │  PRESERVED (100%)│               │  DISCARDED (0%)  │
+   │  PRESERVED       │               │  DISCARDED       │
    │  • Error Traces │               │  • Progress Bars │
    │  • Failing Tests│               │  • Passing Tests │
    │  • File Diffs   │               │  • Download Logs │
@@ -108,7 +109,7 @@ Heimdall Token Saver sits transparently between your terminal commands and AI co
  └────────────────────────────────────────────────────────┘
             │
             ▼
- 🎯 RESULT: 60-99% Token Reduction & Extended Hourly Quotas!
+ 🎯 RESULT: fewer tokens per command (varies by command)
 ```
 
 ### Architecture & Engine Mechanics
@@ -116,7 +117,7 @@ Heimdall Token Saver sits transparently between your terminal commands and AI co
 ```
 CLI command  -->  Specialized processor  -->  Compressed output
                         |
-                  36 processors
+                  42 processors
                   (git, test, cargo, go, build,
                    lint, package_list, python_install,
                    maven_gradle, bun, network, docker,
@@ -125,15 +126,15 @@ CLI command  -->  Specialized processor  -->  Compressed output
                    gh, db_query, cloud_cli, ansible,
                    helm, syslog, ssh, jq_yq, just, act,
                    structured_log, file_listing,
-                   file_content, generic)
+                   file_content, generic,
+                   + 6 BDB MCP processors, see below)
 ```
 
 The engine (`CompressionEngine`) maintains a priority-ordered chain of processors.
 The first processor that can handle the command (`can_handle()`) produces the
 compressed output. `GenericProcessor` serves as a fallback and always matches last.
 
-When a specialized processor doesn't achieve the minimum compression ratio (10%),
-the engine tries the generic processor as a fallback before returning uncompressed output.
+`min_compression_ratio` exists in the engine (default `0.0` in `src/config.py`, i.e. no minimum gain is enforced out of the box; set it to e.g. `0.10` to require a 10% gain).
 
 After the specialized processor runs, a lightweight cleanup pass (`clean()`)
 strips residual ANSI codes and collapses consecutive blank lines.
@@ -168,17 +169,37 @@ that executes, compresses, and returns the result.
 
 Antigravity CLI allows direct output replacement through the deny/reason mechanism.
 
+### Which tools are hooked
+
+- **Claude Code:** `hooks/hooks.json` registers the PreToolUse hook with `"matcher": "Bash"`, and `scripts/hook_pretool.py` exits early for any other `tool_name`. Only Bash commands are ever rewritten. MCP tool calls (`mcp__*`), Read, Edit and other built-in tools are **not** intercepted.
+- **Consequence for the BDB MCP processors:** they are registered like every other processor and match on command names (e.g. `memb_*`, `bdb_td_*`), so they can only run if a *Bash command* starting with such a name is executed. Calls through the MCP servers themselves do not pass through Heimdall, so the BDB MCP processors are currently **not wired** to real MCP traffic.
+- **Antigravity CLI:** `antigravity/hooks.json` uses the AfterTool matcher `run_shell_command|read_file|list_directory`. MCP tools are not matched there either.
+- **Processors that run in practice:** the command processors (git, test, cargo, docker, kubectl, ...) plus `generic` as fallback, for Bash commands that pass the `is_compressible()` filter (no `||`, no unquoted `$()`/backticks/heredocs, no output redirection, no interactive tools).
+
+### Permission behaviour (Claude Code)
+
+For every command it decides to wrap, `scripts/hook_pretool.py` returns `permissionDecision: "allow"` together with the rewritten command (`updatedInput`). The code contains no check against the user's own permission rules or allowlist, so this decision is emitted for each compressible Bash command regardless of those rules. How Claude Code combines a hook's `allow` with the user's permission settings and prompts is defined by Claude Code, not by this repository, and has not been verified here: consult the Claude Code hooks documentation before relying on your existing prompts for commands Heimdall wraps. Commands that Heimdall does not wrap produce no hook output and follow the normal permission flow.
+
 ### Precision Guarantees
 
-Compression is aggressive on noise, conservative on signal:
+Compression is lossy. It aims to remove noise and keep actionable lines, but it does **not** guarantee zero information loss.
 
-- Short outputs (< 200 characters) are **never** modified
-- Compression is only applied if the gain exceeds 10%
-- All errors, stack traces, and actionable information are **fully preserved**
-- Source code files (`cat *.py`, `cat *.ts`, ...) pass through **unchanged** — the model needs exact content
-- Secrets in `.env` files are automatically **redacted** before reaching the model
-- Only "noise" is removed: progress bars, passing tests, installation logs, ANSI codes, platform lines
-- 853 tests including 49 precision-specific tests that verify every critical piece of data survives compression
+What the tests in `tests/test_precision.py` actually check (non-exhaustive):
+
+- git: untracked files, filenames and changed lines in diffs, commit hashes and branch refs are kept
+- pytest and build output: failing tests and their stack traces, and error lines, are kept
+- lint, docker, kubectl, terraform, npm, gh, grep: affected files, failing/unhealthy items and summaries are kept
+- secrets in `env` output are redacted (`test_env_never_leaks_secrets`)
+- generic truncation keeps the first and last lines and inserts a marker (`... (N lines truncated, M total) ...`) when lines are dropped
+
+Known limits:
+
+- **Long middle sections can lose lines, including errors.** Generic truncation (outputs over `generic_truncate_threshold`, default 200 lines) keeps only `generic_keep_head` (100) and `generic_keep_tail` (50) lines. `test_unique_lines_at_boundary_preserved` explicitly allows a `CRITICAL ERROR` line in the middle to be dropped, asserting only that the truncation marker appears.
+- **Tracebacks are capped** at `max_traceback_lines` (default 30, first half and last half kept) in test output.
+- **Diff hunks are capped** at `max_diff_hunk_lines` (default 50) in `git diff` / `gh` diffs.
+- Summarising processors do not print a "compressed" notice; the agent sees the compressed text without being told it is partial. Only the generic truncation marker above, and processor-specific markers like `(N traceback lines truncated)`, signal omission. To see the raw output, re-run the command yourself outside the hook (or use `--dry-run` / `--show-removed` on `scripts/wrap.py`).
+- Source code files (`cat *.py`, `cat *.ts`, ...) pass through **unchanged**.
+- Very short output: `min_input_length` defaults to `1` in code, so effectively all output is eligible; raise it to skip small outputs.
 
 ## Installation
 
@@ -309,7 +330,7 @@ If `~/.local/bin` is not in your PATH, the installer prints instructions.
 
 ## Processors
 
-### 🔌 Specialized BDB MCP Processors (70–95% Token Savings)
+### 🔌 Specialized BDB MCP Processors (not wired to the hook, see [Which tools are hooked](#which-tools-are-hooked))
 Heimdall includes 6 dedicated, zero-latency processors specifically tailored for BDB creative technology and memory MCP servers:
 
 - **BdbTouchdesignerProcessor (`bdb_td_*`, `mcp_td_*`, `touchdesigner_*`, `tdmcp_*`):** Compresses node graph dumps, cooking logs, and DAT scripts. Preserves cook errors, failing scripts, and parameter overrides while stripping unchanged defaults and ticker frames.
@@ -365,7 +386,7 @@ processor is in [`docs/processors/`](docs/processors/).
 
 ## Configuration
 
-Thresholds are configurable via JSON file or environment variables.
+Thresholds are configurable via JSON file or environment variables. The defaults below are the values in `_DEFAULTS` in `src/config.py`.
 
 ### Configuration File
 
@@ -374,12 +395,12 @@ Thresholds are configurable via JSON file or environment variables.
 ```json
 {
   "enabled": true,
-  "min_input_length": 200,
-  "min_compression_ratio": 0.10,
-  "max_diff_hunk_lines": 150,
-  "max_log_entries": 20,
-  "max_file_lines": 300,
-  "generic_truncate_threshold": 500,
+  "min_input_length": 1,
+  "min_compression_ratio": 0.0,
+  "max_diff_hunk_lines": 50,
+  "max_log_entries": 10,
+  "max_file_lines": 100,
+  "generic_truncate_threshold": 200,
   "debug": false
 }
 ```
@@ -415,46 +436,53 @@ Project settings are merged with global settings. Heimdall Token Saver walks up 
 | Parameter | Default | Description |
 |---|---|---|
 | `enabled` | true | Master switch -- set to `false` to bypass all compression |
-| `min_input_length` | 200 | Minimum threshold (characters) to attempt compression |
-| `min_compression_ratio` | 0.10 | Minimum gain (10%) to apply compression |
+| `min_input_length` | 1 | Minimum threshold (characters) to attempt compression |
+| `min_compression_ratio` | 0.0 | Minimum gain (10%) to apply compression |
 | `wrap_timeout` | 300 | Wrapper timeout in seconds |
-| `max_diff_hunk_lines` | 150 | Max lines per hunk in git diff |
+| `max_diff_hunk_lines` | 50 | Max lines per hunk in git diff |
 | `max_diff_context_lines` | 3 | Context lines kept before/after each change in diffs |
-| `max_log_entries` | 20 | Max entries in git log/reflog |
-| `max_file_lines` | 300 | Threshold before file content compression kicks in |
-| `file_keep_head` | 150 | Lines kept from the start of file (fallback strategy) |
-| `file_keep_tail` | 50 | Lines kept from the end of file (fallback strategy) |
-| `file_code_head_lines` | 20 | Import/header lines to preserve in code files |
-| `file_code_body_lines` | 3 | Body lines kept per function/class definition |
+| `max_log_entries` | 10 | Max entries in git log/reflog |
+| `max_file_lines` | 100 | Threshold before file content compression kicks in |
+| `file_keep_head` | 80 | Lines kept from the start of file (fallback strategy) |
+| `file_keep_tail` | 30 | Lines kept from the end of file (fallback strategy) |
+| `file_code_head_lines` | 15 | Import/header lines to preserve in code files |
+| `file_code_body_lines` | 2 | Body lines kept per function/class definition |
 | `file_log_context_lines` | 2 | Context lines around errors in log files |
-| `file_csv_head_rows` | 5 | Data rows kept from start of CSV files |
-| `file_csv_tail_rows` | 3 | Data rows kept from end of CSV files |
-| `generic_truncate_threshold` | 500 | Generic truncation threshold |
-| `generic_keep_head` | 200 | Lines kept from the start (generic) |
-| `generic_keep_tail` | 100 | Lines kept from the end (generic) |
-| `ls_compact_threshold` | 20 | Items before ls compaction |
-| `find_compact_threshold` | 30 | Results before find compaction |
-| `tree_compact_threshold` | 50 | Lines before tree truncation |
+| `file_csv_head_rows` | 3 | Data rows kept from start of CSV files |
+| `file_csv_tail_rows` | 2 | Data rows kept from end of CSV files |
+| `generic_truncate_threshold` | 200 | Generic truncation threshold |
+| `generic_keep_head` | 100 | Lines kept from the start (generic) |
+| `generic_keep_tail` | 50 | Lines kept from the end (generic) |
+| `ls_compact_threshold` | 15 | Items before ls compaction |
+| `find_compact_threshold` | 20 | Results before find compaction |
+| `tree_compact_threshold` | 30 | Lines before tree truncation |
 | `lint_example_count` | 2 | Examples shown per lint rule |
 | `lint_group_threshold` | 3 | Occurrences before grouping by rule |
 | `search_max_per_file` | 3 | Max match lines shown per file |
-| `search_max_files` | 20 | Max files shown in search results |
-| `kubectl_keep_head` | 10 | Lines kept from start of kubectl logs |
-| `kubectl_keep_tail` | 20 | Lines kept from end of kubectl logs |
-| `docker_log_keep_head` | 10 | Lines kept from start of docker logs |
-| `docker_log_keep_tail` | 20 | Lines kept from end of docker logs |
-| `git_branch_threshold` | 30 | Branches before compaction |
-| `git_stash_threshold` | 10 | Stash entries before truncation |
+| `search_max_files` | 15 | Max files shown in search results |
+| `kubectl_keep_head` | 5 | Lines kept from start of kubectl logs |
+| `kubectl_keep_tail` | 10 | Lines kept from end of kubectl logs |
+| `docker_log_keep_head` | 5 | Lines kept from start of docker logs |
+| `docker_log_keep_tail` | 10 | Lines kept from end of docker logs |
+| `git_branch_threshold` | 15 | Branches before compaction |
+| `git_stash_threshold` | 5 | Stash entries before truncation |
 | `max_traceback_lines` | 30 | Max traceback lines before truncation |
+| `db_max_rows` | 20 | Max rows shown for database query results |
 | `db_prune_days` | 90 | Stats retention in days |
-| `user_processors_dir` | `~/.token-saver/processors/` | Directory for custom processors |
+| `chars_per_token` | 4 | Characters-per-token estimate used for stats |
+| `cargo_warning_example_count` | 2 | Examples shown per cargo warning group |
+| `cargo_warning_group_threshold` | 3 | Occurrences before grouping cargo warnings |
+| `jq_passthrough_threshold` | 50 | jq/yq output threshold before compaction |
+| `redaction_allowlist` | `[]` | Names exempt from secret redaction |
+| `max_output_bytes` | 10000000 | Output cap applied by the wrapper |
+| `user_processors_dir` | `""` (empty: `<data dir>/processors`, i.e. `~/.token-saver/processors/`) | Directory for custom processors |
 | `disabled_processors` | `[]` | List of processor names to disable (env: comma-separated) |
 | `max_chain_depth` | 3 | Maximum processor chain depth |
 | `debug` | false | Enable debug logging |
 
 ## Custom Processors
 
-You can extend Heimdall Token Saver with your own processors for commands not covered by the built-in 36.
+You can extend Heimdall Token Saver with your own processors for commands not covered by the built-in 42.
 
 1. Create a Python file with a class inheriting from `src.processors.base.Processor`
 2. Implement `can_handle()`, `process()`, `name`, and set `priority`
@@ -585,7 +613,7 @@ token-saver/
 │   ├── stats.py                     # Stats display
 │   ├── tracker.py                   # SQLite tracking
 │   ├── version_check.py             # GitHub update check
-│   └── processors/                  # 36 auto-discovered processors
+│   └── processors/                  # 42 auto-discovered processors
 │       ├── __init__.py
 │       ├── base.py                  # Abstract Processor class
 │       ├── utils.py                 # Shared utilities (diff compression)
@@ -669,7 +697,7 @@ python3 -m pytest tests/ -v
 - **test_engine.py** (46 tests): compression thresholds, processor priority, ANSI cleanup, generic fallback, hook pattern coverage for 85+ commands
 - **test_processors.py** (432 tests): each processor with nominal and edge cases, chained command routing, all subcommands (blame, inspect, stats, compose, apply/delete, init/output/state, fd, exa, httpie, dotnet/swift/mix test, shellcheck/hadolint/biome, traceback truncation, ansible, helm, syslog, parameterized tests, coverage, docker compose logs, tsc typecheck, .env redaction, minified files, search directory grouping, git lockfiles/stat grouping)
 - **test_hooks.py** (174 tests): matching patterns for all supported commands, exclusions (pipes, sudo, editors, redirections, remote rsync), subprocess integration, global options (git, docker, kubectl), chained commands (shared shell state, `&&` short-circuit, `;` continue), safe trailing pipes
-- **test_precision.py** (49 tests): verification that every critical piece of data survives compression (filenames, hashes, error messages, stack traces, line numbers, rule IDs, diff changes, warning types, secret redaction, unhealthy pods, terraform changes, unmet dependencies)
+- **test_precision.py** (49 tests): verification that key data survives compression (filenames, hashes, error messages, stack traces, line numbers, rule IDs, diff changes, warning types, secret redaction, unhealthy pods, terraform changes, unmet dependencies)
 - **test_core.py** (11 tests): shared compression core (decision, pass-through-on-error, audit logging) and the platform hook end-to-end
 - **test_tracker.py** (26 tests): CRUD, concurrency (4 threads), corruption recovery, session tracking, stats CLI
 - **test_config.py** (19 tests): defaults, env overrides, invalid values

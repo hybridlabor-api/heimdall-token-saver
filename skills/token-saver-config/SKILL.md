@@ -10,10 +10,10 @@ Run `heimdall stats` to see compression statistics for the current and all sessi
 
 ## Configuration
 Token-saver config is stored in `~/.token-saver/config.json`. Available settings:
-- `min_lines`: minimum output lines to trigger compression (default: 5)
-- `min_chars`: minimum output chars to trigger compression (default: 200)
-- `chars_per_token`: ratio for token estimation (default: 3.5)
-- `wrap_timeout`: max seconds for command execution (default: 30)
+- `min_input_length`: minimum output chars to attempt compression (default: 1)
+- `min_compression_ratio`: minimum gain required to apply compression (default: 0.0)
+- `chars_per_token`: ratio for token estimation (default: 4)
+- `wrap_timeout`: max seconds for command execution (default: 300)
 
 To modify: `token-saver config set min_lines 10`
 

@@ -10,7 +10,7 @@
 [![NPM Version](https://img.shields.io/npm/v/@hybridlabor-api/heimdall-token-saver.svg)](https://www.npmjs.com/package/@hybridlabor-api/heimdall-token-saver)
 [![runtime](https://img.shields.io/badge/python-3.9+-blue.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 [![license](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![savings](https://img.shields.io/badge/avg%20savings-60%25--99%25-brightgreen.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
+[![savings](https://img.shields.io/badge/savings-see%20fixtures-lightgrey.svg)](https://github.com/hybridlabor-api/heimdall-token-saver)
 
 **Spare mehr Token & erhalte über 60 % mehr Coding-Power aus deinem KI-Abonnement (Claude Code, Codex, Antigravity).**
 
@@ -28,26 +28,15 @@ Wenn ein KI-Agent rohe CLI-Logs liest:
 
 ### Die Heimdall-Lösung
 **Heimdall Token Saver** agiert als intelligente, verzögerungsfreie lokale Kontext-Firewall zwischen deinen CLI-Tools und deinem KI-Agenten:
-- 🛡 **100 % Signal, 0 % Lärm:** Strippt Fortschrittsbalken, bestandene Test-Logs und Spinner unter **Garantie von 0 % Informationsverlust**. Jeder Stacktrace, jede Fehlermeldung, fehlgeschlagene Assertion und jedes Diff bleiben intakt.
-- 🚀 **Maximaler Abo-Wert:** Bietet **über 60 % höhere effektive Kontextkapazität**, sodass du komplexe Multi-File-Refactorings durchführen kannst, ohne an Stundengrenzen zu stoßen.
+- 🛡 **Rauschentfernung mit begrenztem Verlust:** Strippt Fortschrittsbalken, bestandene Test-Logs und Spinner. Die Komprimierung ist verlustbehaftet: Sehr lange Mittelteile können Zeilen (auch Fehler) verlieren, siehe Präzisionshinweise unten und den englischen README.
+- 🚀 **Weniger Kontextverbrauch:** Die Ersparnis hängt vom Befehl ab; es wird keine pauschale Zahl behauptet.
 - ⚡ **Schnellere Antworten:** Weniger Text für das LLM bedeutet schnellere Antwortzeiten und einen messerscharfen Debugging-Fokus.
 
 ---
 
 ### Ersparnisse Vorher & Nachher
 
-| Befehl / MCP Tool | Rohe Ausgabe | Komprimierte Ausgabe | Token-Ersparnis |
-|-------------------|-----------|-------------------|---------------|
-| `git diff` (großes Refactoring) | 2.270 Token | 909 Token | **60%** |
-| `pytest` (500 Tests, 2 Fehler) | 6.744 Token | 308 Token | **95%** |
-| `npm install` (220 Pakete) | 3.844 Token | 4 Token | **99%** |
-| `bdb_td_nodes` (TouchDesigner Dump) | 12.400 Token | 620 Token | **95%** |
-| `bdb_unreal_actor` (Unreal Engine PCG) | 8.900 Token | 445 Token | **95%** |
-| `bdb_after_effects` (AE Keyframes) | 6.500 Token | 455 Token | **93%** |
-| `bdb_davinci_timeline` (Resolve Dump) | 9.100 Token | 728 Token | **92%** |
-| `memb_search_memory` (memB Vektorsuche) | 5.400 Token | 324 Token | **94%** |
-
-> 🔮 **Mit Heimdall BDB MCP Prozessoren:** Du reduzierst den Token-Verbrauch um 90–95 % pro MCP-Tool-Aufruf, sodass dein Agent 10x länger laufen kann, ohne Kontextgrenzen zu erreichen.
+Die frühere Tabelle (60-99 %, 90-95 % pro MCP-Aufruf) war nicht durch Fixtures oder Benchmarks belegt und wurde entfernt. Reproduzierbare Zahlen aus `examples/fixtures/` (`python3 examples/demo.py`) stehen im englischen [README](README.md#before--after-savings); für die BDB-MCP-Prozessoren gibt es keine Fixtures oder Benchmarks.
 
 > Führe `heimdall benchmark <befehl>` aus, um Ersparnisse in Echtzeit für deine eigenen Workloads zu messen.
 
@@ -68,14 +57,14 @@ Heimdall Token Saver sitzt transparent zwischen deinen Terminal-Befehlen und dei
                              ▼
  ┌────────────────────────────────────────────────────────┐
  │            HEIMDALL TOKEN SAVER ENGINE                 │
- │   36 Spezialisierte Lokale Prozessoren (Null Latenz)   │
+ │   42 Spezialisierte Lokale Prozessoren (Null Latenz)   │
  └───────────────────────────┬────────────────────────────┘
                              │
             ┌────────────────┴────────────────┐
             │                                 │
             ▼                                 ▼
    ┌─────────────────┐               ┌──────────────────┐
-   │ BEHALTEN (100%) │               │ VERWORFEN (0%)   │
+   │ BEHALTEN        │               │ VERWORFEN         │
    │ • Fehler-Traces │               │ • Fortschrittsbal│
    │ • Fehlgeschl.   │               │ • Bestandene Test│
    │ • Datei-Diffs   │               │ • Download-Logs  │
@@ -94,7 +83,7 @@ Heimdall Token Saver sitzt transparent zwischen deinen Terminal-Befehlen und dei
  └────────────────────────────────────────────────────────┘
             │
             ▼
- 🎯 ERGEBNIS: 60-99% Token-Reduzierung & Erhöhte Stundengrenzen!
+ 🎯 ERGEBNIS: weniger Tokens pro Befehl (je nach Befehl unterschiedlich)
 ```
 
 ### Architektur & Engine-Mechanik
@@ -102,7 +91,7 @@ Heimdall Token Saver sitzt transparent zwischen deinen Terminal-Befehlen und dei
 ```
 CLI-Befehl  -->  Spezialisierter Prozessor  -->  Komprimierte Ausgabe
                          |
-                   36 Prozessoren
+                   42 Prozessoren
                    (git, test, cargo, go, build,
                     lint, package_list, python_install,
                     maven_gradle, bun, network, docker,
@@ -126,12 +115,13 @@ Ersetzt Ausgaben direkt über den native Deny/Reason-Mechanismus.
 
 ### Präzisionsgarantien
 
-- Kurze Ausgaben (< 200 Zeichen) werden **niemals** verändert.
-- Komprimierung wird nur angewendet, wenn der Gewinn 10 % übersteigt.
-- Alle Fehler, Stacktraces und korrekturrelevanten Informationen bleiben **vollständig erhalten**.
+Die Komprimierung ist verlustbehaftet; es gibt **keine** Garantie für null Informationsverlust.
+
+- Getestet (`tests/test_precision.py`): u. a. Dateinamen/Änderungen in Diffs, Commit-Hashes, fehlgeschlagene Tests samt Stacktrace, Fehlerzeilen, `env`-Secrets werden anonymisiert; bei generischer Kürzung bleiben Anfang und Ende erhalten und ein Marker `... (N lines truncated, M total) ...` wird eingefügt.
+- Grenzen: Lange Mittelteile können Zeilen verlieren, auch Fehler (generisch: Standard 100 Kopf- + 50 Endzeilen ab 200 Zeilen). Tracebacks sind auf 30 Zeilen (`max_traceback_lines`), Diff-Hunks auf 50 Zeilen (`max_diff_hunk_lines`) begrenzt.
+- Nur Bash-Befehle werden gehookt (Matcher `Bash`); MCP-Tool-Aufrufe laufen nicht durch Heimdall. Der Hook liefert `permissionDecision: "allow"` für umgeschriebene Befehle.
 - Quellcode-Dateien (`cat *.py`, `cat *.ts`) passieren **unverändert**.
-- Secrets in `.env`-Dateien werden automatisch **anonymisiert**.
-- 853 Tests (davon 49 präzisionsspezifisch) garantieren Datenintegrität.
+- Details und Standardwerte: englischer [README](README.md).
 
 ---
 
